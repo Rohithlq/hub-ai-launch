@@ -35,7 +35,7 @@ const Auth = () => {
         toast.success("Welcome back!");
         navigate("/dashboard");
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -49,7 +49,23 @@ const Auth = () => {
 
         if (error) throw error;
 
-        toast.success("Account created! Please check your email to verify.");
+        // Send welcome email
+        if (data.user) {
+          try {
+            await supabase.functions.invoke("send-welcome-email", {
+              body: {
+                email,
+                name: fullName,
+                role: userRole,
+              },
+            });
+          } catch (emailError) {
+            console.error("Failed to send welcome email:", emailError);
+          }
+        }
+
+        toast.success("Account created! Welcome to AI CareerHub! 🎉");
+        navigate("/dashboard");
       }
     } catch (error: any) {
       toast.error(error.message || "An error occurred");
