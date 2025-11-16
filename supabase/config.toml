@@ -1,1 +1,22 @@
 project_id = "aimpvofofkytjkrypgzf"
+
+[functions.send-welcome-email]
+verify_jwt = false
+
+[functions.ai-resume-builder]
+verify_jwt = true
+
+[functions.ai-job-matcher]
+verify_jwt = true
+
+[functions.ai-interview-prep]
+verify_jwt = true
+
+[functions.ai-skill-analyzer]
+verify_jwt = true
+
+[functions.ai-cover-letter]
+verify_jwt = true
+
+[functions.ai-content-moderator]
+verify_jwt = true
